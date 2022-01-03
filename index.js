@@ -1,5 +1,4 @@
 require('dotenv').config()
-const { request, response } = require('express')
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
@@ -17,7 +16,7 @@ app.get('/info', (req, res, next) => {
   Person.countDocuments({}).then(sum => {
     res.send(`<p>Phonebook has info on ${sum} people</p><p>${time}</p>`)
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 app.get('/api/persons', (req, res, next) => {
@@ -28,7 +27,7 @@ app.get('/api/persons', (req, res, next) => {
       res.status(404).end()
     }
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 app.post('/api/persons', (req, res, next) => {
@@ -40,7 +39,7 @@ app.post('/api/persons', (req, res, next) => {
   newPerson.save().then(savedPerson => {
     res.json(savedPerson)
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 app.get('/api/persons/:id', (req, res, next) => {
@@ -51,7 +50,7 @@ app.get('/api/persons/:id', (req, res, next) => {
       res.status(404).end()
     }
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 app.put('/api/persons/:id', (req, res, next) => {
@@ -60,18 +59,18 @@ app.put('/api/persons/:id', (req, res, next) => {
     name: body.name,
     number: body.number
   }
-  Person.findByIdAndUpdate(req.params.id, updatedPerson, { new: true})
-  .then(person => {
-    res.json(person)
-  })
-  .catch(error => next(error))
+  Person.findByIdAndUpdate(req.params.id, updatedPerson, { new: true })
+    .then(person => {
+      res.json(person)
+    })
+    .catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (req, res, next) => {
   Person.findByIdAndRemove(req.params.id).then(result => {
     res.status(204).end()
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 const errorHandler = (error, request, response, next) => {
